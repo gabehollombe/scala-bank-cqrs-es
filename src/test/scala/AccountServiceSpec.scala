@@ -43,7 +43,8 @@ with MockFactory {
 
   "Creating an account" should "add an AccountCreated event" in {
     val eventServiceMock = mock[EventServiceTrait]
-    (eventServiceMock.add _).expects(a [AccountCreated])
+    //TODO: stub account service's nextId method to return 1
+    (eventServiceMock.add[Event] _).expects(AccountCreated(1, "gabe")) // returns AccountCreated with accountId = nextId
     service(eventServiceMock).createAccount("gabe")
   }
 
