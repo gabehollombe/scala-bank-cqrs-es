@@ -38,24 +38,39 @@ with MockFactory {
     result should be(event)
   }
 
+  "Withdrawing money" should "create a Withdrawed event and return it" in {
+    val accountId = UUID.randomUUID()
+    val eventServiceMock = mock[EventService]
+    val event = Withdrawed(accountId, 100)
+    (eventServiceMock.add[Event] _).expects(event).returning(event)
+
+    val result = account(accountId, eventServiceMock).withdraw(100)
+    result should be(event)
+  }
+
   //Trying to mock calling get, but with no predicate argument (worked back before we added predicate arg, so this
   // will likey work better for testing `all` now...
   // (eventServiceMock.get(_:ClassTag[Deposited])).expects(*).returning(depositedEvents)
 
-  "Getting balance" should "sum up all of the deposits made" in {
+  "Getting balance" should "sum up all of the deposits made, and subtract all withdrawals" in {
     val accountId = UUID.randomUUID()
-    val other_accountId = UUID.randomUUID()
+    val otherAccountId = UUID.randomUUID()
 
     val eventService= new EventService()
 
     eventService.events = List(
       Deposited(accountId, 1),
       Deposited(accountId, 2),
-      Deposited(accountId, 3),
-      Deposited(other_accountId, 100))
+      Withdrawed(accountId, 0.5),
+      Withdrawed(accountId, 0.2),
+
+      Deposited(otherAccountId, 100),
+      Withdrawed(otherAccountId, 50))
 
     val result = account(accountId, eventService).getBalance
-    result should be(6)
+    result should be(2.3)
+
+    //TODO also consider transfers
   }
 }
 

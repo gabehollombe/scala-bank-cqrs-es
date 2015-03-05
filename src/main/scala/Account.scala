@@ -9,11 +9,17 @@ class UUIDService {
 }
 
 class Account(id: UUID, events: EventService) {
-  def getBalance =
-    events.get[Deposited](_.accountId == id).foldLeft(BigDecimal(0))((acc, deposit) => acc + deposit.amount )
+  def getBalance = {
+    val sumOfDeposits = events.get[Deposited](_.accountId == id).foldLeft(BigDecimal(0))((acc, deposit) => acc + deposit.amount)
+    val sumOfWithdrawals = events.get[Withdrawed](_.accountId == id).foldLeft(BigDecimal(0))((acc, withdrawal) => acc + withdrawal.amount)
+    sumOfDeposits - sumOfWithdrawals
+  }
 
   def deposit(amount: BigDecimal) =
     events.add(new Deposited(id, amount))
+
+  def withdraw(amount: BigDecimal) =
+    events.add(new Withdrawed(id, amount))
 }
 
 object Account {

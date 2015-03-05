@@ -8,6 +8,7 @@ import java.util.UUID
 abstract class Event
 case class AccountCreated(id: UUID, name: String) extends Event
 case class Deposited(accountId: UUID, amount: BigDecimal) extends Event
+case class Withdrawed(accountId: UUID, amount: BigDecimal) extends Event
 
 class EventService {
   var events = List[Event]()
