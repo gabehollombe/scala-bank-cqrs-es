@@ -27,5 +27,6 @@
     <orderEntry type="library" scope="TEST" name="SBT: org.scalamock:scalamock-core_2.11:3.2:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.scalamock:scalamock-scalatest-support_2.11:3.2:jar" level="project" />
     <orderEntry type="library" name="SBT: org.mockito:mockito-all:1.8.4:jar" level="project" />
+    <orderEntry type="library" name="scala-sdk-2.11.5" level="application" />
   </component>
 </module>

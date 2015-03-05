@@ -196,5 +196,6 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="scala-sdk-2.11.5" level="application" />
   </component>
 </module>

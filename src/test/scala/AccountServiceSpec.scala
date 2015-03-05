@@ -37,12 +37,18 @@ class AccountServiceSpec extends FlatSpec
 with Matchers
 with MockFactory {
 
-  def service(eventService:EventServiceTrait = new EventService()): AccountService = {
+  def service(eventService:EventService = new EventService()): AccountService = {
     new AccountService(eventService)
   }
 
+//  it "can give you the next ID for a new account" in {
+//    val eventServiceMock = stub[EventServiceTrait]
+//    (eventServiceMock.eventsOfType _) when(AccountCreated) returns(List[AccountCreated(1)])
+//
+//  }
+
   "Creating an account" should "add an AccountCreated event" in {
-    val eventServiceMock = mock[EventServiceTrait]
+    val eventServiceMock = mock[EventService]
     //TODO: stub account service's nextId method to return 1
     (eventServiceMock.add[Event] _).expects(AccountCreated(1, "gabe")) // returns AccountCreated with accountId = nextId
     service(eventServiceMock).createAccount("gabe")
