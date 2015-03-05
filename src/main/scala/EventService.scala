@@ -15,6 +15,11 @@ class EventService {
   def add[A <: Event](event: A): A =
     event
 
-  def eventsOfType[C:ClassTag] : List[C] =
-    events.collect { case event: C => event }
+  def all[C:ClassTag] : List[C] = {
+    events.collect { case event: C => event}
+  }
+
+  def get[C:ClassTag](predicate:(C => Boolean) = (_:C) => true) : List[C] = {
+    all[C].filter(predicate)
+  }
 }
