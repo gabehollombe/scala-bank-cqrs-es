@@ -2,9 +2,6 @@ import com.bank._
 import org.scalatest._
 import org.scalamock.scalatest.MockFactory
 
-import scala.reflect._
-import scala.reflect.runtime.universe._
-
 class EventServiceSpec extends FlatSpec
 with Matchers
 with MockFactory {

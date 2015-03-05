@@ -41,16 +41,17 @@ with MockFactory {
     new AccountService(eventService)
   }
 
-//  it "can give you the next ID for a new account" in {
-//    val eventServiceMock = stub[EventServiceTrait]
-//    (eventServiceMock.eventsOfType _) when(AccountCreated) returns(List[AccountCreated(1)])
-//
-//  }
+  it should "give you the next ID for a new account" in {
+    val eventServiceStub = stub[EventService]
+    //NOTE: why do we have to specify anything in `when`?
+    (eventServiceStub.eventsOfType(_: Any)).when(classOf[AccountCreated]).returns(List(AccountCreated(1, "gabe")))
+    service(eventServiceStub).nextId should be (2)
+  }
 
   "Creating an account" should "add an AccountCreated event" in {
     val eventServiceMock = mock[EventService]
-    //TODO: stub account service's nextId method to return 1
-    (eventServiceMock.add[Event] _).expects(AccountCreated(1, "gabe")) // returns AccountCreated with accountId = nextId
+    (eventServiceMock.eventsOfType(_: Any)).expects(classOf[AccountCreated]).returning(List(AccountCreated(1, "gabe")))
+    (eventServiceMock.add[Event] _).expects(AccountCreated(2, "gabe"))
     service(eventServiceMock).createAccount("gabe")
   }
 
