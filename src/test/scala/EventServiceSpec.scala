@@ -20,7 +20,8 @@ with MockFactory {
     val deposited = Deposited(makeUUID, 100)
     s.events = List(created, deposited)
 
-    val events = s.eventsOfType(classOf[AccountCreated])
+    val events = s.eventsOfType[AccountCreated]
     events should be (List(created))
+    events(0).name should be("gabe")
   }
 }

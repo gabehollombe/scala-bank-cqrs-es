@@ -9,6 +9,9 @@ class UUIDService {
 }
 
 class Account(id: UUID, events: EventService) {
+  def getBalance =
+    events.eventsOfType[Deposited].foldLeft(BigDecimal(0))((acc, deposit) => acc + deposit.amount )
+
   def deposit(amount: BigDecimal) =
     events.add(new Deposited(id, amount))
 }

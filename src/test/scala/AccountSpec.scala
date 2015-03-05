@@ -4,6 +4,8 @@ import com.bank._
 import org.scalamock.scalatest.MockFactory
 import org.scalatest._
 
+import scala.reflect.ClassTag
+
 class AccountSpec extends FlatSpec
 with Matchers
 with MockFactory {
@@ -34,6 +36,19 @@ with MockFactory {
 
     val result = account(accountId, eventServiceMock).deposit(100)
     result should be(event)
+  }
+
+  "Getting balance" should "sum up all of the deposits made" in {
+    val accountId = UUID.randomUUID()
+    val eventServiceMock = mock[EventService]
+    val depositedEvents = List(
+      Deposited(accountId, 1),
+      Deposited(accountId, 2),
+      Deposited(accountId, 3))
+    (eventServiceMock.eventsOfType[Deposited](_:ClassTag[Deposited])).expects(*).returning(depositedEvents)
+
+    val result = account(accountId, eventServiceMock).getBalance
+    result should be(6)
   }
 }
 

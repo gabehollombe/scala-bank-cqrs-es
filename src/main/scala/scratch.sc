@@ -1,17 +1,17 @@
 import scala.reflect.runtime.universe._
+import scala.collection.mutable.ListBuffer
+import scala.reflect._
 
-class Top
-class Foo(val name: String) extends Top
-class Bar(val name: String) extends Top
-val f = new Foo("gabe")
-def tt[T](thing: T)(implicit tag: TypeTag[T]) =
-  tag
-tt(new Foo("gabe"))
+trait Thing
+case class Foo(value: String) extends Thing
+case class Bar(value: String) extends Thing
 
-val events = List[Top](new Foo("f"), new Bar("b"))
+def filterByClass[C: ClassTag](things: List[Thing]): List[C] = {
+  things collect { case thing: C => thing }
+}
+val things = List(
+  Foo("1"),
+  Bar("2"),
+  Foo("3"))
 
-def eventsOfType2[T : TypeTag](t: T) : List[Any] =
-  events.filter((e: T)(implicit tag: TypeTag[T]) =>
-
-eventsOfType2(typeOf[Bar])
-
+val filtered = filterByClass[Foo](things)

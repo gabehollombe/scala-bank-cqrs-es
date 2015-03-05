@@ -1,5 +1,6 @@
 package com.bank
 
+import scala.reflect.ClassTag
 import scala.reflect.api.TypeTags
 import scala.reflect.runtime.universe._
 import java.util.UUID
@@ -14,6 +15,6 @@ class EventService {
   def add[A <: Event](event: A): A =
     event
 
-  def eventsOfType[C](c: C) : List[C] =
-    events.filter(e => e.getClass() == c).map(e => e.asInstanceOf[C])
+  def eventsOfType[C:ClassTag] : List[C] =
+    events.collect { case event: C => event }
 }
