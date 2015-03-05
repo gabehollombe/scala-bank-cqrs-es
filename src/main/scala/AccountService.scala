@@ -1,14 +1,17 @@
 package com.bank
 
-class AccountService(eventService: EventService)  {
-  def createAccount(name: String) = {
-    eventService.add(new AccountCreated(nextId, name))
-  }
+import java.util.UUID
 
-  def nextId: Int =
-    eventService.eventsOfType(classOf[AccountCreated]).length + 1
+//NOTE: would rather just use util.UUID and mock it in tests, but we don't know how to pass UUID to our AccountService constructor
+class UUIDService {
+  def generate =
+    java.util.UUID.randomUUID()
+}
 
-  def deposit(accountId: Int, amount: BigDecimal) = {
+class AccountService(eventService: EventService, uuid: UUIDService)  {
+  def createAccount(name: String) =
+    eventService.add(new AccountCreated(uuid.generate, name))
+
+  def deposit(accountId: UUID, amount: BigDecimal) =
     eventService.add(new Deposited(accountId, amount))
-  }
 }
