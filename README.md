@@ -1,7 +1,7 @@
 # TODO
 
 - [] Account Reader
-    * consider MonthlyOverdraftFeeCharged events in balance calculation
+    * consider transfers in balance calc
 - [] Transfers
 - [] Pay interests
 - [] Locking
