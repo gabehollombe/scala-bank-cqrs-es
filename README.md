@@ -1,7 +1,7 @@
 # TODO
 
-- [] Charge fees
-    * Disallow duplicate FeeCharged events
+- [] Account Reader
+    * consider MonthlyOverdraftFeeCharged events in balance calculation
 - [] Transfers
 - [] Pay interests
 - [] Locking

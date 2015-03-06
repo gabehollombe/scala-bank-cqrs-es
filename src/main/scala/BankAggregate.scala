@@ -17,7 +17,7 @@ class BankAggregate(val events: EventService) {
       val accountReader = new AccountReader(id, events, timestamp)
       if (accountReader.isOverdrawn()) {
         val fee: BigDecimal = (accountReader.getBalance * 0.05).abs
-        val feeCharged = FeeCharged(id, fee)
+        val feeCharged = MonthlyOverdraftFeeCharged(id, fee, month, year)
         feeChargeds += feeCharged
         events.add(feeCharged)
       }

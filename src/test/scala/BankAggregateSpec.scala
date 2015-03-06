@@ -18,7 +18,6 @@ with MockFactory
   val feb1 = TimeService.timestampFor(2, 2015)
 
   "A Bank" should "charge fees for accounts that are in overdraft at the end of the month" in {
-
     val eventService = new EventService
 
     val overdrawnAccountID = UUID.randomUUID()
@@ -35,10 +34,30 @@ with MockFactory
     (timeService.currentTimeMillis _).when().returns(12345)
 
     val bank = new BankAggregate(eventService)
-    val events = bank.chargeFees(2, 2015)
+    val result = bank.chargeFees(2, 2015)
     val expectedFee = BigDecimal(0.05 * 50)
+    val feeChargedEvent = MonthlyOverdraftFeeCharged(overdrawnAccountID, expectedFee, 2, 2015, 12345)
 
-    events should be(MutableList(FeeCharged(overdrawnAccountID, expectedFee, 12345)))
+    result should be(MutableList(feeChargedEvent))
+    eventService.events.count(_ == feeChargedEvent) should be(1)
+  }
+  
+  it should "not charge fees if an account has already been charged for a given month" in {
+    val eventService = new EventService
+    val accountID = UUID.randomUUID()
+    (timeService.currentTimeMillis _).when().returns(12345)
+
+    val feeChargedEvent = MonthlyOverdraftFeeCharged(accountID, 10.00, 2, 2015, 12345)
+    eventService.events = MutableList(
+      AccountCreated(accountID, 100, jan1),
+      feeChargedEvent
+    )
+
+    val bank = new BankAggregate(eventService)
+    var result = bank.chargeFees(2, 2015)
+
+    result should be(MutableList())
+    eventService.events.count(_ == feeChargedEvent) should be(1)
   }
 
 }

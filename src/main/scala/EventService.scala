@@ -12,7 +12,7 @@ trait Event {
 case class AccountCreated(id: UUID, overdrawLimit: BigDecimal, var timestamp: Long = 0) extends Event
 case class Deposited(accountId: UUID, amount: BigDecimal, var timestamp: Long = 0) extends Event
 case class Withdrawed(accountId: UUID, amount: BigDecimal, var timestamp: Long = 0) extends Event
-case class FeeCharged(accountId: UUID, amount: BigDecimal, var timestamp: Long = 0) extends Event
+case class MonthlyOverdraftFeeCharged(accountId: UUID, amount: BigDecimal, month: Int, year: Int, var timestamp: Long = 0) extends Event
 
 class TimeService {
   def currentTimeMillis = System.currentTimeMillis()
