@@ -54,7 +54,7 @@ with MockFactory
     )
 
     val bank = new BankAggregate(eventService)
-    var result = bank.chargeFees(2, 2015)
+    val result = bank.chargeFees(2, 2015)
 
     result should be(MutableList())
     eventService.events.count(_ == feeChargedEvent) should be(1)

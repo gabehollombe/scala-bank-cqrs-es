@@ -15,7 +15,7 @@ class AccountReaderSpec extends FlatSpec with Matchers {
   def reader(id: UUID, eventService: EventService = new EventService()) =
     new AccountReader(id, eventService)
 
-  "Getting balance" should "sum up all of the deposits made, and subtract all withdrawals" in {
+  "Getting balance" should "sum up all of the deposits made, and subtract all withdrawals and monthly fees" in {
     val accountId = UUID.randomUUID()
     val otherAccountId = UUID.randomUUID()
 
@@ -26,12 +26,13 @@ class AccountReaderSpec extends FlatSpec with Matchers {
       Deposited(accountId, 2),
       Withdrawed(accountId, 0.5),
       Withdrawed(accountId, 0.2),
+      MonthlyOverdraftFeeCharged(accountId, 0.1, 1, 2015),
 
       Deposited(otherAccountId, 100),
       Withdrawed(otherAccountId, 50))
 
     val result = reader(accountId, eventService).getBalance
-    result should be(2.3)
+    result should be(2.2)
 
     //TODO also consider transfers
   }
