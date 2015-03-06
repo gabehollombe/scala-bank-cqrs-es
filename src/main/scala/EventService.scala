@@ -1,26 +1,49 @@
 package com.bank
 
+import scala.collection.mutable._
 import scala.reflect.ClassTag
-import scala.reflect.api.TypeTags
-import scala.reflect.runtime.universe._
-import java.util.UUID
+import java.util.{Date, UUID}
 
-abstract class Event
-case class AccountCreated(id: UUID, name: String) extends Event
-case class Deposited(accountId: UUID, amount: BigDecimal) extends Event
-case class Withdrawed(accountId: UUID, amount: BigDecimal) extends Event
+trait Event {
+  var timestamp: Long
+}
 
-class EventService {
-  var events = List[Event]()
 
-  def add[A <: Event](event: A): A =
+case class AccountCreated(id: UUID, overdrawLimit: BigDecimal, var timestamp: Long = 0) extends Event
+case class Deposited(accountId: UUID, amount: BigDecimal, var timestamp: Long = 0) extends Event
+case class Withdrawed(accountId: UUID, amount: BigDecimal, var timestamp: Long = 0) extends Event
+case class FeeCharged(accountId: UUID, amount: BigDecimal, var timestamp: Long = 0) extends Event
+
+class TimeService {
+  def currentTimeMillis = System.currentTimeMillis()
+}
+
+object TimeService {
+
+  def timestampFor(month: Int, year: Int) = {
+    if (month <= 0 || month > 12) throw new IllegalArgumentException("Month must be between 1 and 12")
+    if (year <= 0) throw new IllegalArgumentException("Year must be greater than 0")
+
+    val date = new Date(year, month-1, 1)
+    date.getTime
+  }
+
+}
+
+class EventService(implicit timeService: TimeService) {
+  var events = MutableList[Event]()
+
+  def add[A <: Event](event: A): A = {
+    event.timestamp = timeService.currentTimeMillis
+    events += event
     event
+  }
 
-  def all[C:ClassTag] : List[C] = {
+  def all[C:ClassTag] : MutableList[C] = {
     events.collect { case event: C => event}
   }
 
-  def get[C:ClassTag](predicate:(C => Boolean) = (_:C) => true) : List[C] = {
+  def get[C:ClassTag](predicate:(C => Boolean) = (_:C) => true) : MutableList[C] = {
     all[C].filter(predicate)
   }
 }
