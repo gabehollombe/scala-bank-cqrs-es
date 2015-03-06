@@ -15,6 +15,7 @@ with MockFactory
   implicit val timeService = stub[TimeService]
 
   val jan1 = TimeService.timestampFor(1, 2015)
+  val feb1 = TimeService.timestampFor(2, 2015)
 
   "A Bank" should "charge fees for accounts that are in overdraft at the end of the month" in {
 
@@ -27,7 +28,8 @@ with MockFactory
       AccountCreated(accountID, 100, jan1),
       AccountCreated(overdrawnAccountID, 100, jan1 + 1),
       Deposited(accountID, 100, jan1 + 2),
-      Withdrawed(overdrawnAccountID, 50, jan1 + 3)
+      Withdrawed(overdrawnAccountID, 50, jan1 + 3),
+      Withdrawed(accountID, 150, feb1)
     )
 
     (timeService.currentTimeMillis _).when().returns(12345)

@@ -8,8 +8,8 @@ class AccountReader(id: UUID, events: EventService, until: Long = Long.MaxValue)
   }
 
   def getBalance = {
-    val sumOfDeposits = events.get[Deposited](_.accountId == id).foldLeft(BigDecimal(0))((acc, deposit) => acc + deposit.amount)
-    val sumOfWithdrawals = events.get[Withdrawed](_.accountId == id).foldLeft(BigDecimal(0))((acc, withdrawal) => acc + withdrawal.amount)
+    val sumOfDeposits = events.get[Deposited](_.accountId == id).filter(_.timestamp < until).foldLeft(BigDecimal(0))((acc, deposit) => acc + deposit.amount)
+    val sumOfWithdrawals = events.get[Withdrawed](_.accountId == id).filter(_.timestamp < until).foldLeft(BigDecimal(0))((acc, withdrawal) => acc + withdrawal.amount)
     sumOfDeposits - sumOfWithdrawals
   }
 

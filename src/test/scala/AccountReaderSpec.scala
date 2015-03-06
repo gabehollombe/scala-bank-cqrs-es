@@ -37,9 +37,19 @@ class AccountReaderSpec extends FlatSpec with Matchers {
   }
 
   it should "allow limiting the events given a timestamp" in {
+    val accountId = UUID.randomUUID()
 
+    val eventService = new EventService()
 
+    eventService.events = MutableList(
+      Deposited(accountId, 100, 1),
+      Deposited(accountId, 200, 2),
+      Withdrawed(accountId, 100, 3),
+      Withdrawed(accountId, 200, 4))
 
+    val account = new AccountReader(accountId, eventService, 4)
+
+    account.getBalance should be(200)
   }
 
 }
