@@ -1,10 +1,11 @@
-import com.bank._
 
 import java.util.UUID
 
 import org.scalatest.{Matchers, FlatSpec}
 
+import scala.collection.mutable
 import scala.collection.mutable._
+import com.bank._
 
 
 class AccountReaderSpec extends FlatSpec with Matchers {
@@ -21,15 +22,20 @@ class AccountReaderSpec extends FlatSpec with Matchers {
 
     val eventService = new EventService()
 
-    eventService.events = MutableList(
-      Deposited(accountId, 1),
-      Deposited(accountId, 2),
-      Withdrawed(accountId, 0.5),
-      Withdrawed(accountId, 0.2),
-      MonthlyOverdraftFeeCharged(accountId, 0.1, 1, 2015),
+    val accountEvents: mutable.MutableList[(Event, Long)] =  MutableList(
+      (Deposited(accountId, 1), 1L),
+      (Deposited(accountId, 2), 2L),
+      (Withdrawed(accountId, 0.5), 3L),
+      (Withdrawed(accountId, 0.2), 4L),
+      (MonthlyOverdraftFeeCharged(accountId, 0.1, 1, 2015), 5L))
 
-      Deposited(otherAccountId, 100),
-      Withdrawed(otherAccountId, 50))
+    val otherAccountEvents: mutable.MutableList[(Event, Long)] =  MutableList(
+      (Deposited(otherAccountId, 100), 1L),
+      (Withdrawed(otherAccountId, 50), 2L))
+
+    //TODO stub, don't touch private events on ES
+    eventService.events += accountId -> accountEvents
+    eventService.events += otherAccountId -> otherAccountEvents
 
     val result = reader(accountId, eventService).getBalance
     result should be(2.2)
@@ -41,12 +47,14 @@ class AccountReaderSpec extends FlatSpec with Matchers {
     val accountId = UUID.randomUUID()
 
     val eventService = new EventService()
+    val accountEvents: mutable.MutableList[(Event, Long)] =  MutableList(
+      (Deposited(accountId, 100), 1L),
+      (Deposited(accountId, 200), 2L),
+      (Withdrawed(accountId, 100), 3L),
+      (Withdrawed(accountId, 200), 4L))
 
-    eventService.events = MutableList(
-      Deposited(accountId, 100, 1),
-      Deposited(accountId, 200, 2),
-      Withdrawed(accountId, 100, 3),
-      Withdrawed(accountId, 200, 4))
+    //TODO stub, don't touch private events on ES
+    eventService.events += accountId -> accountEvents
 
     val account = new AccountReader(accountId, eventService, 4)
 

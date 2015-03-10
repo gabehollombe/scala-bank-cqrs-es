@@ -18,16 +18,14 @@ with MockFactory {
     new AccountAggregate(uuid, 0, eventService)
   }
 
-  "Creating an account" should "add an AccountCreated event and return it" in {
+  "Creating an account" should "add an AccountCreated event" in {
     val uuid = UUID.randomUUID()
     val eventServiceMock = mock[EventService]
     val uuidMock = stub[com.bank.UUIDService]
     (uuidMock.generate _).when().returns(uuid)
     val event = AccountCreated(uuid, 0)
-    (eventServiceMock.add[Event] _).expects(event).returning(event)
-
-    val result = AccountAggregate.create(0)(eventServiceMock, uuidMock)
-    result should be(event)
+    (eventServiceMock.add[Event] _).expects(event)
+    AccountAggregate.create(0)(eventServiceMock, uuidMock)
   }
 
   // TODO: Look at this again.
@@ -39,14 +37,13 @@ with MockFactory {
 //    a [InvalidAccountIdError] should be thrownBy new AccountAggregate(id = nonExistantUUID, events = eventService)
 //  }
 
-  "Depositing money" should "create a Deposited event and return it" in {
+  "Depositing money" should "create a Deposited event" in {
     val accountId = UUID.randomUUID()
     val eventServiceMock = mock[EventService]
     val event = Deposited(accountId, 100)
-    (eventServiceMock.add[Event] _).expects(event).returning(event)
+    (eventServiceMock.add[Event] _).expects(event)
 
-    val result = account(accountId, eventServiceMock).deposit(100)
-    result should be(event)
+    account(accountId, eventServiceMock).deposit(100)
   }
 
   it should "require a positive amount" in {
@@ -54,14 +51,13 @@ with MockFactory {
     account().deposit(0) should be(AmountMustBePositiveError)
   }
 
-  "Withdrawing money" should "create a Withdrawed event and return it" in {
+  "Withdrawing money" should "create a Withdrawed event" in {
     val accountId = UUID.randomUUID()
     val eventServiceMock = mock[EventService]
     val event = Withdrawed(accountId, 100)
-    (eventServiceMock.add[Event] _).expects(event).returning(event)
+    (eventServiceMock.add[Event] _).expects(event)
     val account = new AccountAggregate(accountId, 100, eventServiceMock)
-    val result = account.withdraw(100)
-    result should be(event)
+    account.withdraw(100)
   }
 
   it should "require a positive amount" in {

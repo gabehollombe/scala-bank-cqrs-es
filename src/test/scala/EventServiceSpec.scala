@@ -1,3 +1,5 @@
+import java.util.UUID
+
 import com.bank._
 import org.scalatest._
 import org.scalamock.scalatest.MockFactory
@@ -7,7 +9,7 @@ class EventServiceSpec extends FlatSpec
 with Matchers
 with MockFactory {
 
-  case class ExampleEvent(id: Int, var timestamp: Long = 0) extends Event
+  case class ExampleEvent(accountId: UUID) extends Event
 
   implicit val timeService = stub[TimeService]
 
@@ -19,41 +21,40 @@ with MockFactory {
 
   "getting events" should "find by type" in {
     val s = service
-    val created = AccountCreated(makeUUID, 0)
-    val deposited = Deposited(makeUUID, 100)
-    s.events = MutableList(created, deposited)
+    val accountId = makeUUID
+    val created   = AccountCreated(accountId, 0)
+    val deposited = Deposited(accountId, 100)
+    val accountEvents: MutableList[(Event, Long)] = MutableList((created, 1L), (deposited, 2L))
+    s.events += accountId -> accountEvents
 
-    val events = s.all[AccountCreated]
-    events should be (MutableList(created))
-    events(0) should be (created)
+    val results = s.all[AccountCreated]
+    results should be (List( (created, 1L) ))
   }
 
-  "getting events" should "find by type and predicate" in {
+  "getting events" should "find by type and account id" in {
     val s = service
-    val deposited1 = Deposited(makeUUID, 100)
-    val deposited2 = Deposited(makeUUID, 200)
-    s.events = MutableList(deposited1, deposited2)
+    val accountId1 = makeUUID
+    val accountId2 = makeUUID
+    val deposited1 = Deposited(accountId1, 100)
+    val deposited2 = Deposited(accountId2, 200)
+    val account1Events: MutableList[(Event, Long)] = MutableList((deposited1, 1L))
+    val account2Events: MutableList[(Event, Long)] = MutableList((deposited2, 2L))
+    s.events += accountId1 -> account1Events
+    s.events += accountId2 -> account2Events
 
-    val predicate = { e:Deposited => e.amount < 150 }
-    val events = s.get[Deposited](predicate)
-    events should be (MutableList(deposited1))
+    val results = s.get[Deposited](accountId1)
+    results should be (List( (deposited1, 1L) ))
   }
 
-  "adding an event" should "put a timestamp on the event and return it" in {
+  "adding an event" should "put a timestamp on the event and persist it as the 2nd element in a tuple" in {
     val s = service
     val now = 12345L
     (timeService.currentTimeMillis _).when().returns(now)
 
-    val event = s.add(ExampleEvent(0))
-    event.timestamp should be(now)
-  }
-
-  "adding an event" should "remember the event" in {
-    val s = service
-    s.events should be(MutableList())
-
-    val event = ExampleEvent(0)
-    s.add(event)
-    s.events should be(MutableList(event))
+    val accountId = makeUUID
+    s.add(ExampleEvent(accountId))
+    val eventsAndTimestamps = s.get[ExampleEvent](accountId)
+    eventsAndTimestamps.length should be(1)
+    eventsAndTimestamps(0)._2 should be(12345L)
   }
 }
