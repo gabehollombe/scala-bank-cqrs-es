@@ -40,7 +40,6 @@ class EventService(implicit timeService: TimeService) {
   }
 
 
-
   def all[C:ClassTag] : List[(C, Long)] = {
     events.values.toList flatMap
       ((accountEvents: MutableList[(Event, Long)]) =>

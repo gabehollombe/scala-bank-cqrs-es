@@ -17,6 +17,12 @@ class UUIDService {
 class AccountAggregate(id: UUID, overdrawLimit: BigDecimal = 0, events: EventService) {
 
   var balance: BigDecimal  = 0
+  for (tup <- events.all[Event]) this.applyEvent(tup._1)
+
+  def applyEvent(event: Event) = event match {
+    case e: Deposited => balance += e.amount
+    case _ => // Ignore unknown events
+  }
 
   def deposit(amount: BigDecimal) =
     if (amount <= 0)

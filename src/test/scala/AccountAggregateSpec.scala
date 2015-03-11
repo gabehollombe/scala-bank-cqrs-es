@@ -37,13 +37,28 @@ with MockFactory {
 //    a [InvalidAccountIdError] should be thrownBy new AccountAggregate(id = nonExistantUUID, events = eventService)
 //  }
 
+  "Handling deposited events" should "increase the balance" in {
+    val accountId = UUID.randomUUID()
+    val eventServiceStub = stub[EventService]
+    val accountEvents = List(
+      (AccountCreated(accountId, 0), 1L),
+      (Deposited(accountId, 1), 2L),
+      (Deposited(accountId, 2), 3L)
+    )
+    (eventServiceStub.all(_: ClassTag[Event])).when(*).returns(accountEvents)
+    val accountAggregate = new AccountAggregate(accountId, 0, eventServiceStub)
+
+    accountAggregate.balance should be(3)
+  }
+
   "Depositing money" should "create a Deposited event" in {
     val accountId = UUID.randomUUID()
-    val eventServiceMock = mock[EventService]
+    val eventServiceStub = stub[EventService]
+    (eventServiceStub.all(_: ClassTag[_])).when(*).returns(List())
     val event = Deposited(accountId, 100)
-    (eventServiceMock.add[Event] _).expects(event)
 
-    account(accountId, eventServiceMock).deposit(100)
+    account(accountId, eventServiceStub).deposit(100)
+    (eventServiceStub.add[Event] _).verify(event)
   }
 
   it should "require a positive amount" in {
@@ -53,11 +68,12 @@ with MockFactory {
 
   "Withdrawing money" should "create a Withdrawed event" in {
     val accountId = UUID.randomUUID()
-    val eventServiceMock = mock[EventService]
+    val eventServiceStub = stub[EventService]
+    (eventServiceStub.all(_: ClassTag[_])).when(*).returns(List())
     val event = Withdrawed(accountId, 100)
-    (eventServiceMock.add[Event] _).expects(event)
-    val account = new AccountAggregate(accountId, 100, eventServiceMock)
+    val account = new AccountAggregate(accountId, 100, eventServiceStub)
     account.withdraw(100)
+    (eventServiceStub.add[Event] _).verify(event)
   }
 
   it should "require a positive amount" in {
@@ -67,9 +83,10 @@ with MockFactory {
 
   it should "prevent overdraws that have passed the limit" in {
     val accountId = UUID.randomUUID()
-    val fakeEventService = stub[EventService]
+    val eventServiceStub = stub[EventService]
+    (eventServiceStub.all(_: ClassTag[_])).when(*).returns(List())
     val overdrawLimit = BigDecimal(100)
-    val account = new AccountAggregate(accountId, overdrawLimit, fakeEventService)
+    val account = new AccountAggregate(accountId, overdrawLimit, eventServiceStub)
     var result = account.withdraw(100.01)
     result should be(OverdrawLimitExceededError)
 
@@ -77,8 +94,9 @@ with MockFactory {
     account.withdraw(200)
     result = account.withdraw(0.01)
     result should be(OverdrawLimitExceededError)
-    (fakeEventService.add[Event] _).verify(Withdrawed(accountId, 0.01)).never
+    (eventServiceStub.add[Event] _).verify(Withdrawed(accountId, 0.01)).never
   }
+
 
 
   //Trying to mock calling get, but with no predicate argument (worked back before we added predicate arg, so this
