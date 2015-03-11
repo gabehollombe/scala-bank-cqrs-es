@@ -45,7 +45,7 @@ with MockFactory {
       (Deposited(accountId, 1), 2L),
       (Deposited(accountId, 2), 3L)
     )
-    (eventServiceStub.all(_: ClassTag[Event])).when(*).returns(accountEvents)
+    (eventServiceStub.accountEvents(_: UUID)).when(accountId).returns(accountEvents)
     val accountAggregate = new AccountAggregate(accountId, 0, eventServiceStub)
 
     accountAggregate.balance should be(3)
@@ -54,7 +54,7 @@ with MockFactory {
   "Depositing money" should "create a Deposited event" in {
     val accountId = UUID.randomUUID()
     val eventServiceStub = stub[EventService]
-    (eventServiceStub.all(_: ClassTag[_])).when(*).returns(List())
+    (eventServiceStub.accountEvents _).when(accountId).returns(List())
     val event = Deposited(accountId, 100)
 
     account(accountId, eventServiceStub).deposit(100)
@@ -69,7 +69,7 @@ with MockFactory {
   "Withdrawing money" should "create a Withdrawed event" in {
     val accountId = UUID.randomUUID()
     val eventServiceStub = stub[EventService]
-    (eventServiceStub.all(_: ClassTag[_])).when(*).returns(List())
+    (eventServiceStub.accountEvents _).when(accountId).returns(List())
     val event = Withdrawed(accountId, 100)
     val account = new AccountAggregate(accountId, 100, eventServiceStub)
     account.withdraw(100)
@@ -84,7 +84,7 @@ with MockFactory {
   it should "prevent overdraws that have passed the limit" in {
     val accountId = UUID.randomUUID()
     val eventServiceStub = stub[EventService]
-    (eventServiceStub.all(_: ClassTag[_])).when(*).returns(List())
+    (eventServiceStub.accountEvents _).when(accountId).returns(List())
     val overdrawLimit = BigDecimal(100)
     val account = new AccountAggregate(accountId, overdrawLimit, eventServiceStub)
     var result = account.withdraw(100.01)

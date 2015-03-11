@@ -4,8 +4,10 @@
     <list default="true" id="29a6f35f-d163-44ba-b2b9-58cabbd38e3d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/AccountAggregate.scala" afterPath="$PROJECT_DIR$/src/main/scala/AccountAggregate.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/AccountReader.scala" afterPath="$PROJECT_DIR$/src/main/scala/AccountReader.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/EventService.scala" afterPath="$PROJECT_DIR$/src/main/scala/EventService.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/EventServiceSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/EventServiceSpec.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="bank.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,14 +35,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="EventService.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/EventService.scala">
+      <file leaf-file-name="AccountAggregate.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/AccountAggregate.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="166" max-vertical-offset="1102">
-              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-              <folding>
-                <element signature="e#18#49#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="399" max-vertical-offset="1045">
+              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -48,89 +48,33 @@
       <file leaf-file-name="AccountAggregateSpec.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6587591" vertical-offset="1140" max-vertical-offset="2033">
-              <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.44444445" vertical-offset="1292" max-vertical-offset="2033">
+              <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OutcomeOf.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.ivy2/cache/org.scalatest/scalatest_2.11/bundles/scalatest_2.11-2.2.1.jar!/org/scalatest/OutcomeOf.class">
+      <file leaf-file-name="EventService.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/EventService.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.56" vertical-offset="0" max-vertical-offset="228">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="244" max-vertical-offset="1178">
+              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+              <folding>
+                <element signature="e#18#49#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Transformer.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.ivy2/cache/org.scalatest/scalatest_2.11/bundles/scalatest_2.11-2.2.1.jar!/org/scalatest/Transformer.class">
+      <file leaf-file-name="EventServiceSpec.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/EventServiceSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.04" vertical-offset="0" max-vertical-offset="190">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FlatSpecLike.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.ivy2/cache/org.scalatest/scalatest_2.11/bundles/scalatest_2.11-2.2.1.jar!/org/scalatest/FlatSpecLike.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.84" vertical-offset="1270" max-vertical-offset="1805">
-              <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FlatSpec.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.ivy2/cache/org.scalatest/scalatest_2.11/bundles/scalatest_2.11-2.2.1.jar!/org/scalatest/FlatSpec.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.8" vertical-offset="0" max-vertical-offset="209">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractMockFactory.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.ivy2/cache/org.scalamock/scalamock-scalatest-support_2.11/jars/scalamock-scalatest-support_2.11-3.2.jar!/org/scalamock/scalatest/AbstractMockFactory.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.08" vertical-offset="0" max-vertical-offset="266">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MockFactoryBase.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.ivy2/cache/org.scalamock/scalamock-core_2.11/jars/scalamock-core_2.11-3.2.jar!/org/scalamock/MockFactoryBase.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.12" vertical-offset="563" max-vertical-offset="1539">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SuperEngine.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.ivy2/cache/org.scalatest/scalatest_2.11/bundles/scalatest_2.11-2.2.1.jar!/org/scalatest/SuperEngine.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.84" vertical-offset="871" max-vertical-offset="1406">
-              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AccountAggregate.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/AccountAggregate.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="160" max-vertical-offset="1045">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="546" max-vertical-offset="1482">
+              <caret line="43" column="2" selection-start-line="43" selection-start-column="2" selection-end-line="43" selection-end-column="2" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -155,11 +99,11 @@
         <option value="$PROJECT_DIR$/src/main/scala/BankAggregate.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/AccountReaderSpec.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/BankAggregateSpec.scala" />
-        <option value="$PROJECT_DIR$/src/test/scala/EventServiceSpec.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scratch.sc" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/main/scala/EventService.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/AccountAggregate.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/EventService.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/EventServiceSpec.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala" />
       </list>
     </option>
@@ -196,7 +140,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -207,20 +151,7 @@
       <autoscrollFromSource />
       <sortByType />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala-bank-cqrs-es" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="GoToClass.includeLibraries" value="false" />
@@ -240,7 +171,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="FullScreen" value="false" />
     <property name="LayoutCode.rearrangeEntriesScala" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="acc&#9;FILE&#9;file:///Users/neo/workspace/bank/src/test/scala/AccountAggregateSpec.scala&#10;agg&#9;FILE&#9;file:///Users/neo/workspace/bank/src/test/scala/BankAggregateSpec.scala&#10;readme&#9;FILE&#9;file:///Users/neo/workspace/bank/README.md&#10;event&#9;null&#9;null&#10;scr&#9;FILE&#9;file:///Users/neo/workspace/bank/src/main/scala/scratch.sc&#10;scrat&#9;FILE&#9;file:///Users/neo/workspace/bank/src/main/scala/scratch.sc&#10;eventserv&#9;FILE&#9;file:///Users/neo/workspace/bank/src/main/scala/EventService.scala&#10;bank&#9;FILE&#9;file:///Users/neo/workspace/bank/src/test/scala/BankAggregateSpec.scala&#10;todo&#9;ACTION&#9;ActivateTODOToolWindow&#10;even&#9;null&#9;null&#10;timeser&#9;null&#9;null&#10;ba&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/test/scala/BankAggregateSpec.scala&#10;accread&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/AccountReader.scala&#10;bankag&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/test/scala/BankAggregateSpec.scala&#10;tod&#9;ACTION&#9;ActivateTODOToolWindow&#10;acagg&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/AccountAggregate.scala&#10;ags&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/test/scala/AccountAggregateSpec.scala&#10;a&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/AccountAggregate.scala&#10;error&#9;null&#9;null&#10;aas&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/test/scala/AccountAggregateSpec.scala&#10;w&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/AccountAggregate.scala&#10;eventser&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/EventService.scala&#10;accountag&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/AccountAggregate.scala&#10;AccAggSpec&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/test/scala/AccountAggregateSpec.scala&#10;events&#9;FILE&#9;file:///Users/neo/workspace/bank/src/main/scala/EventService.scala" />
+    <property name="SearchEverywhereHistoryKey" value="eventserv&#9;FILE&#9;file:///Users/neo/workspace/bank/src/main/scala/EventService.scala&#10;accounta&#9;FILE&#9;file:///Users/neo/workspace/bank/src/main/scala/AccountAggregate.scala&#10;acc&#9;FILE&#9;file:///Users/neo/workspace/bank/src/test/scala/AccountAggregateSpec.scala&#10;agg&#9;FILE&#9;file:///Users/neo/workspace/bank/src/test/scala/BankAggregateSpec.scala&#10;readme&#9;FILE&#9;file:///Users/neo/workspace/bank/README.md&#10;event&#9;null&#9;null&#10;scr&#9;FILE&#9;file:///Users/neo/workspace/bank/src/main/scala/scratch.sc&#10;scrat&#9;FILE&#9;file:///Users/neo/workspace/bank/src/main/scala/scratch.sc&#10;bank&#9;FILE&#9;file:///Users/neo/workspace/bank/src/test/scala/BankAggregateSpec.scala&#10;todo&#9;ACTION&#9;ActivateTODOToolWindow&#10;even&#9;null&#9;null&#10;timeser&#9;null&#9;null&#10;ba&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/test/scala/BankAggregateSpec.scala&#10;accread&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/AccountReader.scala&#10;bankag&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/test/scala/BankAggregateSpec.scala&#10;tod&#9;ACTION&#9;ActivateTODOToolWindow&#10;acagg&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/AccountAggregate.scala&#10;ags&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/test/scala/AccountAggregateSpec.scala&#10;a&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/AccountAggregate.scala&#10;error&#9;null&#9;null&#10;aas&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/test/scala/AccountAggregateSpec.scala&#10;w&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/AccountAggregate.scala&#10;eventser&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/EventService.scala&#10;accountag&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/main/scala/AccountAggregate.scala&#10;AccAggSpec&#9;FILE&#9;file:///Users/neo/workspace/scala-bank-cqrs-es/src/test/scala/AccountAggregateSpec.scala&#10;events&#9;FILE&#9;file:///Users/neo/workspace/bank/src/main/scala/EventService.scala" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.sbt" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="ScalaTest" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
@@ -590,12 +521,13 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32883817" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40248963" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="101" y="428" width="1680" height="1046" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40248963" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="101" y="428" width="1680" height="1046" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.23706004" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" x="143" y="1721" width="1680" height="405" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40228692" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="143" y="1721" width="1680" height="405" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32832617" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SBT" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -603,12 +535,11 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11886994" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.43762994" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="143" y="1102" width="1680" height="622" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43762994" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="143" y="1102" width="1680" height="622" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939914" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -667,11 +598,17 @@
           <properties />
           <option name="timeStamp" value="22" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala</url>
+          <line>48</line>
+          <properties />
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="23" />
+      <option name="time" value="24" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="ScalaTestRunConfiguration">
@@ -993,16 +930,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/EventServiceSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="209" max-vertical-offset="1254">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/AccountReaderSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="768" max-vertical-offset="1330">
@@ -1017,24 +944,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="361" max-vertical-offset="950">
           <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/EventService.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="445" max-vertical-offset="1121">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="e#18#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/org.scalatest/scalatest_2.11/bundles/scalatest_2.11-2.2.1.jar!/org/scalatest/Transformer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.04" vertical-offset="0" max-vertical-offset="190">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1081,24 +990,52 @@
     </entry>
     <entry file="jar://$USER_HOME$/.ivy2/cache/org.scalatest/scalatest_2.11/bundles/scalatest_2.11-2.2.1.jar!/org/scalatest/OutcomeOf.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.56" vertical-offset="0" max-vertical-offset="228">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.21797323" vertical-offset="0" max-vertical-offset="523">
+          <caret line="6" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.scalatest/scalatest_2.11/bundles/scalatest_2.11-2.2.1.jar!/org/scalatest/Transformer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14901961" vertical-offset="0" max-vertical-offset="510">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/AccountAggregate.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="160" max-vertical-offset="1045">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="399" max-vertical-offset="1045">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/EventService.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="244" max-vertical-offset="1178">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding>
+            <element signature="e#18#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/EventServiceSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="546" max-vertical-offset="1482">
+          <caret line="43" column="2" selection-start-line="43" selection-start-column="2" selection-end-line="43" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6587591" vertical-offset="1140" max-vertical-offset="2033">
-          <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.44444445" vertical-offset="1292" max-vertical-offset="2033">
+          <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
           <folding />
         </state>
       </provider>

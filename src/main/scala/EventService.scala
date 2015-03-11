@@ -46,7 +46,11 @@ class EventService(implicit timeService: TimeService) {
         accountEvents collect { case (event: C, timestamp: Long) => (event, timestamp)})
   }
 
-  def get[C:ClassTag](accountId: UUID): MutableList[(C, Long)] = {
-    events(accountId) collect { case (event: C, timestamp: Long) => (event, timestamp) }
+  def accountEvents(accountId: UUID): List[(Event, Long)] = {
+    events.getOrElse(accountId, MutableList()).toList
+  }
+
+  def accountEventsOfType[C:ClassTag](accountId: UUID): List[(C, Long)] = {
+    events.getOrElse(accountId, MutableList()).toList collect { case (event: C, timestamp: Long) => (event, timestamp) }
   }
 }

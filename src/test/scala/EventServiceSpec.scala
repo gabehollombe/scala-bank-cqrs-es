@@ -31,6 +31,18 @@ with MockFactory {
     results should be (List( (created, 1L) ))
   }
 
+  "getting events" should "find by account id" in {
+    val s = service
+    val accountId = makeUUID
+    val created   = AccountCreated(accountId, 0)
+    val deposited = Deposited(accountId, 100)
+    val accountEvents: MutableList[(Event, Long)] = MutableList((created, 1L), (deposited, 2L))
+    s.events += accountId -> accountEvents
+
+    val results = s.accountEvents(accountId)
+    results should be(accountEvents)
+  }
+
   "getting events" should "find by type and account id" in {
     val s = service
     val accountId1 = makeUUID
@@ -42,7 +54,7 @@ with MockFactory {
     s.events += accountId1 -> account1Events
     s.events += accountId2 -> account2Events
 
-    val results = s.get[Deposited](accountId1)
+    val results = s.accountEventsOfType[Deposited](accountId1)
     results should be (List( (deposited1, 1L) ))
   }
 
@@ -53,7 +65,7 @@ with MockFactory {
 
     val accountId = makeUUID
     s.add(ExampleEvent(accountId))
-    val eventsAndTimestamps = s.get[ExampleEvent](accountId)
+    val eventsAndTimestamps = s.accountEventsOfType[ExampleEvent](accountId)
     eventsAndTimestamps.length should be(1)
     eventsAndTimestamps(0)._2 should be(12345L)
   }
