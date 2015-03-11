@@ -30,20 +30,19 @@ class AccountAggregate(id: UUID, overdrawLimit: BigDecimal = 0, events: EventSer
   def deposit(amount: BigDecimal) =
     if (amount <= 0)
       AmountMustBePositiveError
-    else {
-      balance += amount
-      events.add(new Deposited(id, amount))
-    }
+    else addAndApply(new Deposited(id, amount))
 
   def withdraw(amount: BigDecimal) =
     if (amount <= 0)
       AmountMustBePositiveError
     else if (balance - amount < -overdrawLimit)
       OverdrawLimitExceededError
-    else {
-      balance -= amount
-      events.add(new Withdrawed(id, amount))
-    }
+    else addAndApply(new Withdrawed(id, amount))
+
+  def addAndApply(event: Event) = {
+    events.add(event)
+    applyEvent(event)
+  }
 }
 
 object AccountAggregate {
