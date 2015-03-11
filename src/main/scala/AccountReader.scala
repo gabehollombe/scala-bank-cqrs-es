@@ -3,6 +3,17 @@ package com.bank
 import java.util.UUID
 
 class AccountReader(id: UUID, events: EventService, until: Long = Long.MaxValue) {
+  var balance: BigDecimal  = 0
+  for (tup <- events.accountEvents(this.id).filter(_._2 < until)) this.applyEvent(tup._1)
+
+  def applyEvent(event: Event) = event match {
+    case e: Deposited => balance += e.amount
+    case e: YearlyInterestPaid => balance += e.amount
+    case e: Withdrawed => balance -= e.amount
+    case e: MonthlyOverdraftFeeCharged => balance -= e.amount
+    case _ => // Ignore unknown events
+  }
+
   def notYetPaidForYear(year: Int): Boolean =
     events.
       accountEventsOfType[YearlyInterestPaid](id).
@@ -15,16 +26,7 @@ class AccountReader(id: UUID, events: EventService, until: Long = Long.MaxValue)
       count( (tup: (MonthlyOverdraftFeeCharged, Long)) => tup._2 < until && tup._1.month == month && tup._1.year == year) == 0
 
 
-
   def isOverdrawn(): Boolean = {
-    getBalance < 0
-  }
-
-  def getBalance = {
-    // TODO: SAD TUPLE No Destructuring of anonymous param list in ALL of these =-(
-    val sumOfDeposits = events.accountEventsOfType[Deposited](id).filter(_._2 < until).foldLeft(BigDecimal(0))((acc, tup) => acc + tup._1.amount)
-    val sumOfWithdrawals = events.accountEventsOfType[Withdrawed](id).filter(_._2 < until).foldLeft(BigDecimal(0))((acc, tup) => acc + tup._1.amount)
-    val sumOfOverdraftFees = events.accountEventsOfType[MonthlyOverdraftFeeCharged](id).filter(_._2 < until).foldLeft(BigDecimal(0))((acc, tup) => acc + tup._1.amount)
-    sumOfDeposits - sumOfWithdrawals - sumOfOverdraftFees
+    balance < 0
   }
 }

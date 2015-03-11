@@ -37,7 +37,7 @@ class AccountReaderSpec extends FlatSpec with Matchers {
     eventService.events += accountId -> accountEvents
     eventService.events += otherAccountId -> otherAccountEvents
 
-    val result = reader(accountId, eventService).getBalance
+    val result = reader(accountId, eventService).balance
     result should be(2.2)
 
     //TODO also consider transfers
@@ -58,7 +58,7 @@ class AccountReaderSpec extends FlatSpec with Matchers {
 
     val account = new AccountReader(accountId, eventService, 4)
 
-    account.getBalance should be(200)
+    account.balance should be(200)
   }
 
 }

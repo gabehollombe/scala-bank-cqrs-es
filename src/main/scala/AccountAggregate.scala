@@ -2,20 +2,11 @@ package com.bank
 
 import java.util.UUID
 
-//NOTE: would rather just use util.UUID and mock it in tests, but we don't know how to pass UUID to our Account constructor
-
 case class InvalidAccountIdError() extends Error
 case class AmountMustBePositiveError() extends Error
 case class OverdrawLimitExceededError() extends Error
 
-
-class UUIDService {
-  def generate =
-    java.util.UUID.randomUUID()
-}
-
 class AccountAggregate(id: UUID, overdrawLimit: BigDecimal = 0, events: EventService) {
-
   var balance: BigDecimal  = 0
   for (tup <- events.accountEvents(this.id)) this.applyEvent(tup._1)
 
