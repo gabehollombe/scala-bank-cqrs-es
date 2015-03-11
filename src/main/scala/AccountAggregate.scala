@@ -21,6 +21,9 @@ class AccountAggregate(id: UUID, overdrawLimit: BigDecimal = 0, events: EventSer
 
   def applyEvent(event: Event) = event match {
     case e: Deposited => balance += e.amount
+    case e: YearlyInterestPaid => balance += e.amount
+    case e: Withdrawed => balance -= e.amount
+    case e: MonthlyOverdraftFeeCharged => balance -= e.amount
     case _ => // Ignore unknown events
   }
 

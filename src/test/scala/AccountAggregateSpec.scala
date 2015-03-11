@@ -51,6 +51,48 @@ with MockFactory {
     accountAggregate.balance should be(3)
   }
 
+  "Handling withdrawed events" should "decrease the balance" in {
+    val accountId = UUID.randomUUID()
+    val eventServiceStub = stub[EventService]
+    val accountEvents = List(
+      (AccountCreated(accountId, 0), 1L),
+      (Withdrawed(accountId, 1), 2L),
+      (Withdrawed(accountId, 2), 3L)
+    )
+    (eventServiceStub.accountEvents(_: UUID)).when(accountId).returns(accountEvents)
+    val accountAggregate = new AccountAggregate(accountId, 0, eventServiceStub)
+
+    accountAggregate.balance should be(-3)
+  }
+
+  "Handling monthly fee events" should "decrease the balance" in {
+    val accountId = UUID.randomUUID()
+    val eventServiceStub = stub[EventService]
+    val accountEvents = List(
+      (AccountCreated(accountId, 0), 1L),
+      (MonthlyOverdraftFeeCharged(accountId, 1, 1, 2015), 2L),
+      (MonthlyOverdraftFeeCharged(accountId, 2, 2, 2015), 3L)
+    )
+    (eventServiceStub.accountEvents(_: UUID)).when(accountId).returns(accountEvents)
+    val accountAggregate = new AccountAggregate(accountId, 0, eventServiceStub)
+
+    accountAggregate.balance should be(-3)
+  }
+
+  "Handling yearly interest paid events" should "decrease the balance" in {
+    val accountId = UUID.randomUUID()
+    val eventServiceStub = stub[EventService]
+    val accountEvents = List(
+      (AccountCreated(accountId, 0), 1L),
+      (YearlyInterestPaid(accountId, 1, 2015), 2L),
+      (YearlyInterestPaid(accountId, 2, 2016), 3L)
+    )
+    (eventServiceStub.accountEvents(_: UUID)).when(accountId).returns(accountEvents)
+    val accountAggregate = new AccountAggregate(accountId, 0, eventServiceStub)
+
+    accountAggregate.balance should be(3)
+  }
+
   "Depositing money" should "create a Deposited event" in {
     val accountId = UUID.randomUUID()
     val eventServiceStub = stub[EventService]
