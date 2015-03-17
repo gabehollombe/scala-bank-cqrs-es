@@ -35,9 +35,14 @@ class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, events: 
     if (amount <= 0)
       AmountMustBePositiveError
     else {
-      addAndApply(new Withdrawed(id, amount))
-      events.add(new Deposited(destinationAccountId, amount))
-      events.add(new Transferred(this.id, amount, destinationAccountId))
+      AccountRepo.getAccount(destinationAccountId) match {
+        case Some(destinationAccount) => {
+          this.withdraw(amount)
+          destinationAccount.deposit(amount)
+          events.add(new Transferred(this.id, amount, destinationAccountId))
+        }
+        case _ => throw new InvalidAccountIdError()
+      }
     }
   }
 

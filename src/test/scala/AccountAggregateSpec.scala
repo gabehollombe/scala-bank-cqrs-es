@@ -160,5 +160,9 @@ with MockFactory {
     account().transfer(-1, UUID.randomUUID()) should be(AmountMustBePositiveError)
     account().transfer(0, UUID.randomUUID()) should be(AmountMustBePositiveError)
   }
+
+  it should "throw an InvalidAccountIdError error if destination account id is not found" in {
+    a [InvalidAccountIdError] should be thrownBy account().transfer(100.00, UUID.randomUUID())
+  }
 }
 
