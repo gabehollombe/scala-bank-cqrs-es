@@ -20,28 +20,34 @@ class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, events: 
   }
 
   def deposit(amount: BigDecimal) =
-    if (amount <= 0)
-      AmountMustBePositiveError
-    else addAndApply(new Deposited(id, amount))
+    this.synchronized {
+      if (amount <= 0)
+        AmountMustBePositiveError
+      else addAndApply(new Deposited(id, amount))
+    }
 
   def withdraw(amount: BigDecimal) =
-    if (amount <= 0)
-      AmountMustBePositiveError
-    else if (balance - amount < -overdrawLimit)
-      OverdrawLimitExceededError
-    else addAndApply(new Withdrawed(id, amount))
+    this.synchronized {
+      if (amount <= 0)
+        AmountMustBePositiveError
+      else if (balance - amount < -overdrawLimit)
+        OverdrawLimitExceededError
+      else addAndApply(new Withdrawed(id, amount))
+    }
 
   def transfer(amount: BigDecimal, destinationAccountId: UUID) = {
-    if (amount <= 0)
-      AmountMustBePositiveError
-    else {
-      AccountRepo.getAccount(destinationAccountId) match {
-        case Some(destinationAccount) => {
-          this.withdraw(amount)
-          destinationAccount.deposit(amount)
-          events.add(new Transferred(this.id, amount, destinationAccountId))
+    this.synchronized {
+      if (amount <= 0)
+        AmountMustBePositiveError
+      else {
+        AccountRepo.getAccount(destinationAccountId) match {
+          case Some(destinationAccount) => {
+            this.withdraw(amount)
+            destinationAccount.deposit(amount)
+            events.add(new Transferred(this.id, amount, destinationAccountId))
+          }
+          case _ => throw new InvalidAccountIdError()
         }
-        case _ => throw new InvalidAccountIdError()
       }
     }
   }
