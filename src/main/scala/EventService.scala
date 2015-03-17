@@ -15,6 +15,7 @@ case class Deposited(accountId: UUID, amount: BigDecimal) extends Event
 case class Withdrawed(accountId: UUID, amount: BigDecimal) extends Event
 case class MonthlyOverdraftFeeCharged(accountId: UUID, amount: BigDecimal, month: Int, year: Int) extends Event
 case class YearlyInterestPaid(accountId: UUID, amount: BigDecimal, year: Int) extends Event
+case class Transferred(accountId: UUID, amount: BigDecimal, destinationAccountId: UUID) extends Event
 
 class TimeService {
   def currentTimeMillis = System.currentTimeMillis()

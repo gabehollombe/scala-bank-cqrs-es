@@ -139,6 +139,28 @@ with MockFactory {
     (eventServiceStub.add[Event] _).verify(Withdrawed(accountId, 0.01)).never
   }
 
+  "Transfering money to another account" should "withdraw from this account, deposit into destination account, and create a transfer event" in {
+    val accountId = UUID.randomUUID()
+    val otherAccountId = UUID.randomUUID()
+    val eventServiceStub = stub[EventService]
+    (eventServiceStub.accountEvents _).when(accountId).returns(List())
+    val account = new AccountAggregate(accountId, 0, eventServiceStub)
+    account.deposit(100)
+
+    account.transfer(10, otherAccountId)
+
+    val deposited = Deposited(otherAccountId, 10)
+    val withdrawed = Withdrawed(accountId, 10)
+    val transferred = Transferred(accountId, 10, otherAccountId)
+    (eventServiceStub.add[Event] _).verify(deposited)
+    (eventServiceStub.add[Event] _).verify(withdrawed)
+    (eventServiceStub.add[Event] _).verify(transferred)
+  }
+  it should "require a positive amount" in {
+    account().transfer(-1, UUID.randomUUID()) should be(AmountMustBePositiveError)
+    account().transfer(0, UUID.randomUUID()) should be(AmountMustBePositiveError)
+  }
+
 
 
   //Trying to mock calling get, but with no predicate argument (worked back before we added predicate arg, so this

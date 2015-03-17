@@ -30,6 +30,16 @@ class AccountAggregate(id: UUID, overdrawLimit: BigDecimal = 0, events: EventSer
       OverdrawLimitExceededError
     else addAndApply(new Withdrawed(id, amount))
 
+  def transfer(amount: BigDecimal, destinationAccountId: UUID) = {
+    if (amount <= 0)
+      AmountMustBePositiveError
+    else {
+      addAndApply(new Withdrawed(id, amount))
+      events.add(new Deposited(destinationAccountId, amount))
+      events.add(new Transferred(this.id, amount, destinationAccountId))
+    }
+  }
+
   def addAndApply(event: Event) = {
     events.add(event)
     applyEvent(event)
