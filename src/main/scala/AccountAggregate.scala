@@ -6,7 +6,8 @@ case class InvalidAccountIdError() extends Error
 case class AmountMustBePositiveError() extends Error
 case class OverdrawLimitExceededError() extends Error
 
-class AccountAggregate(id: UUID, overdrawLimit: BigDecimal = 0, events: EventService) {
+class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, events: EventService) {
+
   var balance: BigDecimal  = 0
   for (tup <- events.accountEvents(this.id)) this.applyEvent(tup._1)
 
@@ -47,6 +48,9 @@ class AccountAggregate(id: UUID, overdrawLimit: BigDecimal = 0, events: EventSer
 }
 
 object AccountAggregate {
-  def create(overdrawLimit: BigDecimal)(implicit events: EventService, uuid: UUIDService) =
-    events.add(new AccountCreated(uuid.generate, overdrawLimit))
+  def create(overdrawLimit: BigDecimal)(implicit events: EventService, uuid: UUIDService) = {
+    val id = uuid.generate
+    events.add(new AccountCreated(id, overdrawLimit))
+    new AccountAggregate(id, overdrawLimit, events)
+  }
 }
