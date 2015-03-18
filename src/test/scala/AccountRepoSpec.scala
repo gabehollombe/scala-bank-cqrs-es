@@ -44,4 +44,14 @@ with MockFactory {
     repo.saveAccount(accountStub)
     (eventService.add[Event] _) verify event twice
   }
+
+  it should "clear its unsaved events" in {
+    class NoArgsAccountAggregate extends AccountAggregate(UUID.randomUUID(), 0, repo)
+    val accountStub = stub[NoArgsAccountAggregate]
+    (accountStub.unsavedEvents _).when().returns(List())
+
+    repo.saveAccount(accountStub)
+
+    (accountStub.clearUnsavedEvents _).verify
+  }
 }

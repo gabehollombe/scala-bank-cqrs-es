@@ -8,6 +8,7 @@ class AccountRepo(val eventService: EventService, uuidService : UUIDService) {
 
   def saveAccount(accountAggregate: AccountAggregate): Unit = {
     for (event <- accountAggregate.unsavedEvents) eventService.add(event)
+    accountAggregate.clearUnsavedEvents
   }
 
   def createAccount(overdrawLimit: BigDecimal = 0) : AccountAggregate = {

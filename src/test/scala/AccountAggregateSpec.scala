@@ -157,5 +157,12 @@ with MockFactory {
   it should "throw an InvalidAccountIdError error if destination account id is not found" in {
     a [InvalidAccountIdError] should be thrownBy account().transfer(100.00, UUID.randomUUID())
   }
+
+  "Clearing unsaved events" should "empty out the unsaved events list" in {
+    val acc = account()
+    acc.deposit(1)
+    acc.clearUnsavedEvents
+    acc.unsavedEvents.length.shouldBe(0)
+  }
 }
 

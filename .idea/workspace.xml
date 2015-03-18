@@ -6,7 +6,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/AccountRepo.scala" afterPath="$PROJECT_DIR$/src/main/scala/AccountRepo.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="bank.iws" />
@@ -38,10 +37,22 @@
       <file leaf-file-name="AccountAggregate.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/AccountAggregate.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1520">
-              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="817" max-vertical-offset="1558">
+              <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
               <folding>
                 <element signature="e#18#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountAggregateSpec.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2565" max-vertical-offset="3306">
+              <caret line="163" column="4" selection-start-line="163" selection-start-column="4" selection-end-line="163" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -50,18 +61,18 @@
       <file leaf-file-name="AccountRepo.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/AccountRepo.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
-              <caret line="13" column="2" selection-start-line="13" selection-start-column="2" selection-end-line="13" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="589">
+              <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AccountRepoSpec.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AccountRepoSpec.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="1007">
-              <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.9169279" vertical-offset="384" max-vertical-offset="1197">
+              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -75,18 +86,6 @@
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="228">
               <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AccountAggregateSpec.scala" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7936" vertical-offset="2335" max-vertical-offset="3173">
-              <caret line="149" column="2" selection-start-line="149" selection-start-column="2" selection-end-line="149" selection-end-column="2" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -149,10 +148,10 @@
         <option value="$PROJECT_DIR$/src/main/scala/scratch.sc" />
         <option value="$PROJECT_DIR$/src/test/scala/AccountRepoTest.scala" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/AccountRepo.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/AccountAggregate.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/AccountRepo.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala" />
       </list>
     </option>
   </component>
@@ -810,7 +809,13 @@
       <option name="project" value="LOCAL" />
       <updated>1426579278211</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="BIG Refactor - make account aggregates keep track of unsaved changes.  Have repo.save get those changes and persist them to event store.">
+      <created>1426663991902</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1426663991903</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -918,7 +923,8 @@
     <MESSAGE value="repository pattern added" />
     <MESSAGE value="error handling for invalid account id on transfer" />
     <MESSAGE value="Synchronize on account aggregate deposit, withdraw, and transfer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Synchronize on account aggregate deposit, withdraw, and transfer" />
+    <MESSAGE value="BIG Refactor - make account aggregates keep track of unsaved changes.  Have repo.save get those changes and persist them to event store." />
+    <option name="LAST_COMMIT_MESSAGE" value="BIG Refactor - make account aggregates keep track of unsaved changes.  Have repo.save get those changes and persist them to event store." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1318,34 +1324,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/AccountAggregate.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1520">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <element signature="e#18#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/AccountRepo.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
-          <caret line="13" column="2" selection-start-line="13" selection-start-column="2" selection-end-line="13" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="1007">
-          <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/UUIDService.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="228">
@@ -1354,10 +1332,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/AccountAggregate.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="817" max-vertical-offset="1558">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding>
+            <element signature="e#18#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7936" vertical-offset="2335" max-vertical-offset="3173">
-          <caret line="149" column="2" selection-start-line="149" selection-start-column="2" selection-end-line="149" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2565" max-vertical-offset="3306">
+          <caret line="163" column="4" selection-start-line="163" selection-start-column="4" selection-end-line="163" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/AccountRepo.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="589">
+          <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9169279" vertical-offset="384" max-vertical-offset="1197">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>

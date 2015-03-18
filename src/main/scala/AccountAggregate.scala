@@ -15,6 +15,8 @@ class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, repo: Ac
   var unsavedEventsList: MutableList[Event] = MutableList()
 
   def unsavedEvents : List[Event] = this.unsavedEventsList.toList
+  def clearUnsavedEvents =
+    unsavedEventsList.clear()
 
   def loadEvents(events: List[Event]) =
     for (event <- events) this.applyEvent(event)
