@@ -12,7 +12,6 @@ class AccountReaderSpec extends FlatSpec with Matchers {
 
   implicit val timeService = new TimeService
 
-
   def reader(id: UUID, eventService: EventService = new EventService()) =
     new AccountReader(id, eventService)
 

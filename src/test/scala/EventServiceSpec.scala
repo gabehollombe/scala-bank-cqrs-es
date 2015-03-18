@@ -43,7 +43,7 @@ with MockFactory {
     results should be(accountEvents)
   }
 
-  "getting events" should "find by type and account id" in {
+  it should "find by type and account id" in {
     val s = service
     val accountId1 = makeUUID
     val accountId2 = makeUUID
@@ -56,6 +56,23 @@ with MockFactory {
 
     val results = s.accountEventsOfType[Deposited](accountId1)
     results should be (List( (deposited1, 1L) ))
+  }
+
+  it should "find by account id and cutoff date" in {
+    val s = service
+    val accountId1 = makeUUID
+    val accountId2 = makeUUID
+    val deposited1 = Deposited(accountId1, 100)
+    val deposited2 = Deposited(accountId2, 200)
+    val jan1 = TimeService.timestampFor(1, 2015)
+    val feb1 = TimeService.timestampFor(2, 2015)
+    val account1Events: MutableList[(Event, Long)] = MutableList((deposited1, jan1), (deposited1, feb1))
+    val account2Events: MutableList[(Event, Long)] = MutableList((deposited2, jan1))
+    s.events += accountId1 -> account1Events
+    s.events += accountId2 -> account2Events
+
+    val results = s.accountEvents(accountId1, feb1)
+    results should be (List( (deposited1, jan1) ))
   }
 
   "adding an event" should "put a timestamp on the event and persist it as the 2nd element in a tuple" in {
