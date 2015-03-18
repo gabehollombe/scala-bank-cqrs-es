@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29a6f35f-d163-44ba-b2b9-58cabbd38e3d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/AccountAggregate.scala" afterPath="$PROJECT_DIR$/src/main/scala/AccountAggregate.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/AccountRepo.scala" afterPath="$PROJECT_DIR$/src/main/scala/AccountRepo.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala" afterPath="$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="bank.iws" />
@@ -38,7 +36,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala/AccountAggregate.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="817" max-vertical-offset="1558">
-              <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+              <caret line="71" column="2" selection-start-line="71" selection-start-column="2" selection-end-line="71" selection-end-column="2" />
               <folding>
                 <element signature="e#18#39#0" expanded="true" />
               </folding>
@@ -49,8 +47,8 @@
       <file leaf-file-name="AccountAggregateSpec.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2565" max-vertical-offset="3306">
-              <caret line="163" column="4" selection-start-line="163" selection-start-column="4" selection-end-line="163" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2584" max-vertical-offset="3249">
+              <caret line="142" column="4" selection-start-line="142" selection-start-column="4" selection-end-line="142" selection-end-column="4" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -58,21 +56,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AccountRepo.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AccountRepo.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/AccountRepo.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="589">
-              <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.71473354" vertical-offset="0" max-vertical-offset="638">
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AccountRepoSpec.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AccountRepoSpec.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9169279" vertical-offset="384" max-vertical-offset="1197">
-              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="380" max-vertical-offset="1197">
+              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -149,9 +147,9 @@
         <option value="$PROJECT_DIR$/src/test/scala/AccountRepoTest.scala" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/scala/AccountAggregate.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/AccountRepo.scala" />
-        <option value="$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala" />
       </list>
     </option>
   </component>
@@ -815,7 +813,13 @@
       <option name="project" value="LOCAL" />
       <updated>1426663991903</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Repo will clear unsaved events when an account is saved">
+      <created>1426664534541</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1426664534541</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -849,7 +853,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40248963" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="101" y="428" width="1680" height="1046" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4017094" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="101" y="428" width="1680" height="1046" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -862,7 +866,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15548456" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28846154" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="143" y="1102" width="1680" height="622" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28846154" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="143" y="1102" width="1680" height="622" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -924,22 +928,23 @@
     <MESSAGE value="error handling for invalid account id on transfer" />
     <MESSAGE value="Synchronize on account aggregate deposit, withdraw, and transfer" />
     <MESSAGE value="BIG Refactor - make account aggregates keep track of unsaved changes.  Have repo.save get those changes and persist them to event store." />
-    <option name="LAST_COMMIT_MESSAGE" value="BIG Refactor - make account aggregates keep track of unsaved changes.  Have repo.save get those changes and persist them to event store." />
+    <MESSAGE value="Repo will clear unsaved events when an account is saved" />
+    <option name="LAST_COMMIT_MESSAGE" value="Repo will clear unsaved events when an account is saved" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala</url>
-          <line>105</line>
+          <line>136</line>
           <properties />
-          <option name="timeStamp" value="22" />
+          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="24" />
+      <option name="time" value="26" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="ScalaTestRunConfiguration">
@@ -1332,10 +1337,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="380" max-vertical-offset="1197">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/AccountAggregate.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="817" max-vertical-offset="1558">
-          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <caret line="71" column="2" selection-start-line="71" selection-start-column="2" selection-end-line="71" selection-end-column="2" />
           <folding>
             <element signature="e#18#39#0" expanded="true" />
           </folding>
@@ -1344,8 +1359,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/AccountAggregateSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2565" max-vertical-offset="3306">
-          <caret line="163" column="4" selection-start-line="163" selection-start-column="4" selection-end-line="163" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2584" max-vertical-offset="3249">
+          <caret line="142" column="4" selection-start-line="142" selection-start-column="4" selection-end-line="142" selection-end-column="4" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -1354,19 +1369,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/AccountRepo.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="589">
-          <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.71473354" vertical-offset="0" max-vertical-offset="638">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/AccountRepoSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9169279" vertical-offset="384" max-vertical-offset="1197">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

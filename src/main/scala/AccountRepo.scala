@@ -21,5 +21,4 @@ class AccountRepo(val eventService: EventService, uuidService : UUIDService) {
   def getAccount(id: UUID) = accounts.get(id)
 
   var accounts = Map[UUID, AccountAggregate]()
-
 }

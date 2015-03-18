@@ -8,7 +8,6 @@ import org.scalatest._
 class AccountAggregateSpec extends FlatSpec
 with Matchers
 with MockFactory {
-
   implicit val timeService = stub[TimeService]
   implicit val uuidService = stub[UUIDService]
   implicit val eventService = stub[EventService]
@@ -25,18 +24,8 @@ with MockFactory {
     val uuidMock = stub[com.bank.UUIDService]
     (uuidMock.generate _).when().returns(uuid)
     val account = AccountAggregate.create(0)(uuidMock, repo)
-    (uuidMock.generate _).verify
     account.id shouldBe uuid
   }
-
-  // TODO: Look at this again.
-//  it should "not initialize without an existing AccountCreated event with the appropriate id" in {
-//    val eventService = new EventService()
-//    val accountUUID = UUID.randomUUID()
-//    eventService.events = List ( AccountCreated(accountUUID, 0) )
-//    val nonExistantUUID = UUID.randomUUID()
-//    a [InvalidAccountIdError] should be thrownBy new AccountAggregate(id = nonExistantUUID, events = eventService)
-//  }
 
   "Handling deposited events" should "increase the balance" in {
     val accountId = UUID.randomUUID()
@@ -127,8 +116,9 @@ with MockFactory {
     account.unsavedEvents should not contain(Withdrawed(accountId, 0.01))
   }
 
-  "Transfering money to another account" should "create an unsaved withdraw from this account, deposit into destination account, and create a transfer event" in {
+  def transferFixture = new {
     class NoArgsAccountRepo extends AccountRepo(eventService, uuidService)
+
     val repo = stub[NoArgsAccountRepo]
 
     val account1 = new AccountAggregate(UUID.randomUUID(), 0, repo)
@@ -136,17 +126,24 @@ with MockFactory {
     val account2Id = UUID.randomUUID()
     class NoArgsAccountAggregate extends AccountAggregate(account2Id, 0, repo)
     val account2 = stub[NoArgsAccountAggregate]
-
     (repo.getAccount _).when(account2.id).returns(Option(account2))
 
-    account1.deposit(11)
-
     val transferAmount = BigDecimal(10)
-    account1.transfer(transferAmount, account2.id)
+  }
 
-    account1.unsavedEvents should contain (Withdrawed(account1.id, transferAmount))
-    account1.unsavedEvents should contain (Transferred(account1.id, transferAmount, account2.id))
-    (account2.deposit _).verify(transferAmount)
+  "Transfering money to another account" should "create an unsaved withdrawed event from this account and create an unsaved transfered event from this account" in {
+    val f = transferFixture
+    f.account1.deposit(f.transferAmount)
+    f.account1.transfer(f.transferAmount, f.account2.id)
+    f.account1.unsavedEvents should contain(Withdrawed(f.account1.id, f.transferAmount))
+    f.account1.unsavedEvents should contain(Transferred(f.account1.id, f.transferAmount, f.account2.id))
+  }
+
+  it should "deposit into destination account" in {
+    val f = transferFixture
+    f.account1.deposit(f.transferAmount)
+    f.account1.transfer(f.transferAmount, f.account2.id)
+    (f.account2.deposit _).verify(f.transferAmount)
   }
 
   it should "require a positive amount" in {
