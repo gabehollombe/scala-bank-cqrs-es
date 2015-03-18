@@ -1,32 +1,32 @@
 import java.util.UUID
 
+import com.bank
 import com.bank._
 import org.scalamock.scalatest.MockFactory
 import org.scalatest._
-
-import scala.reflect.ClassTag
 
 class AccountAggregateSpec extends FlatSpec
 with Matchers
 with MockFactory {
 
   implicit val timeService = stub[TimeService]
+  implicit val uuidService = stub[UUIDService]
+  implicit val eventService = stub[EventService]
+  val repo = new AccountRepo(eventService, uuidService)
 
-  def account( uuid:UUID = UUID.randomUUID(),
-               eventService:EventService = new EventService()
-               ): AccountAggregate = {
-    new AccountAggregate(uuid, 0, eventService)
+  def account( uuid:UUID = UUID.randomUUID() ): AccountAggregate = {
+    new AccountAggregate(uuid, 0, repo)
   }
 
-  "Creating an account" should "add an AccountCreated event" in {
+  implicit val eventServiceMock = stub[EventService]
+
+  "Creating an account" should "generate its id from the uuid service" in {
     val uuid = UUID.randomUUID()
-    val eventServiceMock = mock[EventService]
     val uuidMock = stub[com.bank.UUIDService]
     (uuidMock.generate _).when().returns(uuid)
-    val event = AccountCreated(uuid, 0)
-    (eventServiceMock.add[Event] _).expects(event)
-    (eventServiceMock.accountEvents _).expects(uuid).returns(List())
-    AccountAggregate.create(0)(eventServiceMock, uuidMock)
+    val account = AccountAggregate.create(0)(uuidMock, repo)
+    (uuidMock.generate _).verify
+    account.id shouldBe uuid
   }
 
   // TODO: Look at this again.
@@ -40,68 +40,59 @@ with MockFactory {
 
   "Handling deposited events" should "increase the balance" in {
     val accountId = UUID.randomUUID()
-    val eventServiceStub = stub[EventService]
-    val accountEvents = List(
-      (AccountCreated(accountId, 0), 1L),
-      (Deposited(accountId, 1), 2L),
-      (Deposited(accountId, 2), 3L)
+    val events = List(
+      Deposited(accountId, 1),
+      Deposited(accountId, 2)
     )
-    (eventServiceStub.accountEvents(_: UUID)).when(accountId).returns(accountEvents)
-    val accountAggregate = new AccountAggregate(accountId, 0, eventServiceStub)
+    val accountAggregate = new AccountAggregate(accountId, 0, repo)
+    accountAggregate.loadEvents(events)
 
     accountAggregate.balance should be(3)
   }
 
   "Handling withdrawed events" should "decrease the balance" in {
     val accountId = UUID.randomUUID()
-    val eventServiceStub = stub[EventService]
-    val accountEvents = List(
-      (AccountCreated(accountId, 0), 1L),
-      (Withdrawed(accountId, 1), 2L),
-      (Withdrawed(accountId, 2), 3L)
+    val events = List(
+      Withdrawed(accountId, 1),
+      Withdrawed(accountId, 2)
     )
-    (eventServiceStub.accountEvents(_: UUID)).when(accountId).returns(accountEvents)
-    val accountAggregate = new AccountAggregate(accountId, 0, eventServiceStub)
+    val accountAggregate = new AccountAggregate(accountId, 10, repo)
+    accountAggregate.loadEvents(events)
 
     accountAggregate.balance should be(-3)
   }
 
   "Handling monthly fee events" should "decrease the balance" in {
     val accountId = UUID.randomUUID()
-    val eventServiceStub = stub[EventService]
-    val accountEvents = List(
-      (AccountCreated(accountId, 0), 1L),
-      (MonthlyOverdraftFeeCharged(accountId, 1, 1, 2015), 2L),
-      (MonthlyOverdraftFeeCharged(accountId, 2, 2, 2015), 3L)
+    val events = List(
+      MonthlyOverdraftFeeCharged(accountId, 1, 1, 2015),
+      MonthlyOverdraftFeeCharged(accountId, 2, 2, 2015)
     )
-    (eventServiceStub.accountEvents(_: UUID)).when(accountId).returns(accountEvents)
-    val accountAggregate = new AccountAggregate(accountId, 0, eventServiceStub)
+    val accountAggregate = new AccountAggregate(accountId, 0, repo)
+    accountAggregate.loadEvents(events)
 
     accountAggregate.balance should be(-3)
   }
 
   "Handling yearly interest paid events" should "decrease the balance" in {
     val accountId = UUID.randomUUID()
-    val eventServiceStub = stub[EventService]
-    val accountEvents = List(
-      (AccountCreated(accountId, 0), 1L),
-      (YearlyInterestPaid(accountId, 1, 2015), 2L),
-      (YearlyInterestPaid(accountId, 2, 2016), 3L)
+    val events = List(
+      YearlyInterestPaid(accountId, 1, 2015),
+      YearlyInterestPaid(accountId, 2, 2016)
     )
-    (eventServiceStub.accountEvents(_: UUID)).when(accountId).returns(accountEvents)
-    val accountAggregate = new AccountAggregate(accountId, 0, eventServiceStub)
+    val accountAggregate = new AccountAggregate(accountId, 0, repo)
+    accountAggregate.loadEvents(events)
 
     accountAggregate.balance should be(3)
   }
 
-  "Depositing money" should "create a Deposited event" in {
+  "Depositing money" should "create an unsaved Deposited event" in {
     val accountId = UUID.randomUUID()
-    val eventServiceStub = stub[EventService]
-    (eventServiceStub.accountEvents _).when(accountId).returns(List())
     val event = Deposited(accountId, 100)
 
-    account(accountId, eventServiceStub).deposit(100)
-    (eventServiceStub.add[Event] _).verify(event)
+    val acc = account(accountId)
+    acc.deposit(100)
+    acc.unsavedEvents should contain(event)
   }
 
   it should "require a positive amount" in {
@@ -109,14 +100,12 @@ with MockFactory {
     account().deposit(0) should be(AmountMustBePositiveError)
   }
 
-  "Withdrawing money" should "create a Withdrawed event" in {
+  "Withdrawing money" should "create an unsaved Withdrawed event" in {
     val accountId = UUID.randomUUID()
-    val eventServiceStub = stub[EventService]
-    (eventServiceStub.accountEvents _).when(accountId).returns(List())
     val event = Withdrawed(accountId, 100)
-    val account = new AccountAggregate(accountId, 100, eventServiceStub)
+    val account = new AccountAggregate(accountId, 100, repo)
     account.withdraw(100)
-    (eventServiceStub.add[Event] _).verify(event)
+    account.unsavedEvents should contain(event)
   }
 
   it should "require a positive amount" in {
@@ -126,10 +115,8 @@ with MockFactory {
 
   it should "prevent overdraws that have passed the limit" in {
     val accountId = UUID.randomUUID()
-    val eventServiceStub = stub[EventService]
-    (eventServiceStub.accountEvents _).when(accountId).returns(List())
     val overdrawLimit = BigDecimal(100)
-    val account = new AccountAggregate(accountId, overdrawLimit, eventServiceStub)
+    val account = new AccountAggregate(accountId, overdrawLimit, repo)
     var result = account.withdraw(100.01)
     result should be(OverdrawLimitExceededError)
 
@@ -137,23 +124,29 @@ with MockFactory {
     account.withdraw(200)
     result = account.withdraw(0.01)
     result should be(OverdrawLimitExceededError)
-    (eventServiceStub.add[Event] _).verify(Withdrawed(accountId, 0.01)).never
+    account.unsavedEvents should not contain(Withdrawed(accountId, 0.01))
   }
 
-  "Transfering money to another account" should "withdraw from this account, deposit into destination account, and create a transfer event" in {
-    val repo = AccountRepo
-    val account1 = repo.createAccount()
-    val account2 = repo.createAccount()
-    val transferAmount = 10
+  "Transfering money to another account" should "create an unsaved withdraw from this account, deposit into destination account, and create a transfer event" in {
+    class NoArgsAccountRepo extends AccountRepo(eventService, uuidService)
+    val repo = stub[NoArgsAccountRepo]
+
+    val account1 = new AccountAggregate(UUID.randomUUID(), 0, repo)
+
+    val account2Id = UUID.randomUUID()
+    class NoArgsAccountAggregate extends AccountAggregate(account2Id, 0, repo)
+    val account2 = stub[NoArgsAccountAggregate]
+
+    (repo.getAccount _).when(account2.id).returns(Option(account2))
+
     account1.deposit(11)
+
+    val transferAmount = BigDecimal(10)
     account1.transfer(transferAmount, account2.id)
 
-    // TODO: Feels a bit weird to talk to repo's eventService directly here instead of injecting this in to a
-    // repo instance (but we want repo as a singleton (object) so good enough for now?
-    // We'll just test the side effect in the system: that event service ends up with right events
-    repo.eventService.accountEvents(account1.id).map(_._1) should contain (Withdrawed(account1.id, transferAmount))
-    repo.eventService.accountEvents(account2.id).map(_._1) should contain (Deposited(account2.id, transferAmount))
-    repo.eventService.all[Transferred].map(_._1) should contain (Transferred(account1.id, transferAmount, account2.id))
+    account1.unsavedEvents should contain (Withdrawed(account1.id, transferAmount))
+    account1.unsavedEvents should contain (Transferred(account1.id, transferAmount, account2.id))
+    (account2.deposit _).verify(transferAmount)
   }
 
   it should "require a positive amount" in {

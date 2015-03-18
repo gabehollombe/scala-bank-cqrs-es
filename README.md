@@ -1,5 +1,5 @@
 # TODO
-- [] Locking
+- [] Test locking?
 
 I would then like Gabe and Ben to work on a small programming exercise together modeling a simple retail banking application.  This should be implemented in Scala using DDD, Event Sourcing and CQRS in FlatSpec style (ScalaTest), I’ll leave other implementation details to them.
 

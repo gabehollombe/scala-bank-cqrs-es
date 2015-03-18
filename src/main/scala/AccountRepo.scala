@@ -2,13 +2,17 @@ package com.bank
 
 import java.util.UUID
 
-object AccountRepo {
-  implicit val timeService = new TimeService()
-  implicit val eventService = new EventService()
-  implicit val uuidService = new UUIDService()
+class AccountRepo(val eventService: EventService, uuidService : UUIDService) {
+  implicit val repo = this
+  implicit val uuid = uuidService
 
-  def createAccount(overdrawLimit: Int = 0) : AccountAggregate = {
+  def saveAccount(accountAggregate: AccountAggregate): Unit = {
+    for (event <- accountAggregate.unsavedEvents) eventService.add(event)
+  }
+
+  def createAccount(overdrawLimit: BigDecimal = 0) : AccountAggregate = {
     val account = AccountAggregate.create(overdrawLimit)
+    eventService.add(new AccountCreated(account.id, overdrawLimit))
     accounts += (account.id -> account)
     account
   }

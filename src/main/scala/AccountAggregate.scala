@@ -2,14 +2,22 @@ package com.bank
 
 import java.util.UUID
 
+import scala.collection.mutable
+import scala.collection.mutable._
+
 case class InvalidAccountIdError() extends Error
 case class AmountMustBePositiveError() extends Error
 case class OverdrawLimitExceededError() extends Error
 
-class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, events: EventService) {
+class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, repo: AccountRepo) {
 
-  var balance: BigDecimal  = 0
-  for (tup <- events.accountEvents(this.id)) this.applyEvent(tup._1)
+  var balance: BigDecimal = 0
+  var unsavedEventsList: MutableList[Event] = MutableList()
+
+  def unsavedEvents : List[Event] = this.unsavedEventsList.toList
+
+  def loadEvents(events: List[Event]) =
+    for (event <- events) this.applyEvent(event)
 
   def applyEvent(event: Event) = event match {
     case e: Deposited => balance += e.amount
@@ -40,11 +48,11 @@ class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, events: 
       if (amount <= 0)
         AmountMustBePositiveError
       else {
-        AccountRepo.getAccount(destinationAccountId) match {
+        repo.getAccount(destinationAccountId) match {
           case Some(destinationAccount) => {
             this.withdraw(amount)
             destinationAccount.deposit(amount)
-            events.add(new Transferred(this.id, amount, destinationAccountId))
+            unsavedEventsList += new Transferred(this.id, amount, destinationAccountId)
           }
           case _ => throw new InvalidAccountIdError()
         }
@@ -53,15 +61,14 @@ class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, events: 
   }
 
   def addAndApply(event: Event) = {
-    events.add(event)
+    unsavedEventsList += event
     applyEvent(event)
   }
 }
 
 object AccountAggregate {
-  def create(overdrawLimit: BigDecimal)(implicit events: EventService, uuid: UUIDService) = {
+  def create(overdrawLimit: BigDecimal)(implicit uuid: UUIDService, repo: AccountRepo) = {
     val id = uuid.generate
-    events.add(new AccountCreated(id, overdrawLimit))
-    new AccountAggregate(id, overdrawLimit, events)
+    new AccountAggregate(id, overdrawLimit, repo)
   }
 }
