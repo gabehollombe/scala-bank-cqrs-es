@@ -8,7 +8,7 @@ class AccountReader(id: UUID, events: EventService, until: Long = Long.MaxValue)
   var balance: BigDecimal  = 0
   var interestPaidYears : MutableList[Int] = new MutableList()
   var feeChargedMonths : MutableList[(Int, Int)] = new MutableList()
-  for (tup <- events.accountEvents(this.id, until)) this.applyEvent(tup._1)
+  for (event <- events.accountEvents(this.id, until)) this.applyEvent(event)
 
   def applyEvent(event: Event) = event match {
     case e: Deposited => balance += e.amount

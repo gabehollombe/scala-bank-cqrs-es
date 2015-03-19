@@ -28,7 +28,7 @@ with MockFactory {
     s.events += accountId -> accountEvents
 
     val results = s.all[AccountCreated]
-    results should be (List( (created, 1L) ))
+    results shouldBe List(created)
   }
 
   "getting events" should "find by account id" in {
@@ -40,7 +40,7 @@ with MockFactory {
     s.events += accountId -> accountEvents
 
     val results = s.accountEvents(accountId)
-    results should be(accountEvents)
+    results should be(accountEvents.map(_._1))
   }
 
   it should "find by type and account id" in {
@@ -55,7 +55,7 @@ with MockFactory {
     s.events += accountId2 -> account2Events
 
     val results = s.accountEventsOfType[Deposited](accountId1)
-    results should be (List( (deposited1, 1L) ))
+    results shouldBe List(deposited1)
   }
 
   it should "find by account id and cutoff date" in {
@@ -72,7 +72,7 @@ with MockFactory {
     s.events += accountId2 -> account2Events
 
     val results = s.accountEvents(accountId1, feb1)
-    results should be (List( (deposited1, jan1) ))
+    results shouldBe List(deposited1)
   }
 
   "adding an event" should "put a timestamp on the event and persist it as the 2nd element in a tuple" in {
@@ -82,7 +82,7 @@ with MockFactory {
 
     val accountId = makeUUID
     s.add(ExampleEvent(accountId))
-    val eventsAndTimestamps = s.accountEventsOfType[ExampleEvent](accountId)
+    val eventsAndTimestamps = s.events.get(accountId).get
     eventsAndTimestamps.length should be(1)
     eventsAndTimestamps(0)._2 should be(12345L)
   }

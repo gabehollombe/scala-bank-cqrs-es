@@ -22,7 +22,7 @@ class BankAggregate(val events: EventService) {
 
 
   def accountIds = {
-    events.all[AccountCreated].map(_._1.accountId)
+    events.all[AccountCreated].map(_.accountId)
   }
 
   def chargeFees(month: Int, year: Int) = {

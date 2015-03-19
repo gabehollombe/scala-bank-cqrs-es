@@ -40,18 +40,22 @@ class EventService(implicit timeService: TimeService) {
     events += (event.accountId -> accountEvents)
   }
 
-
-  def all[C:ClassTag] : List[(C, Long)] = {
-    events.values.toList flatMap
-      ((accountEvents: MutableList[(Event, Long)]) =>
-        accountEvents collect { case (event: C, timestamp: Long) => (event, timestamp)})
+  def all[C:ClassTag] : List[C] = {
+    events
+      .values
+      .toList
+      .flatMap ((accountEvents: MutableList[(Event, Long)]) =>
+        accountEvents collect { case (event: C, timestamp: Long) => event})
   }
 
-  def accountEvents(accountId: UUID, until: Long = Long.MaxValue): List[(Event, Long)] = {
-    events.getOrElse(accountId, MutableList()).toList.filter(_._2 < until)
+  def accountEvents(accountId: UUID, until: Long = Long.MaxValue): List[Event] = {
+    events.getOrElse(accountId, MutableList()).toList.filter(_._2 < until).map(_._1)
   }
 
-  def accountEventsOfType[C:ClassTag](accountId: UUID): List[(C, Long)] = {
-    events.getOrElse(accountId, MutableList()).toList collect { case (event: C, timestamp: Long) => (event, timestamp) }
+  def accountEventsOfType[C:ClassTag](accountId: UUID): List[C] = {
+    events.getOrElse(accountId, MutableList())
+      .toList
+      .collect { case (event: C, timestamp: Long) => (event, timestamp) }
+      .map(_._1)
   }
 }
