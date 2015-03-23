@@ -1,46 +1,34 @@
+import java.util.UUID
+
 import com.bank._
 
-import scala.collection.mutable
+import scala.collection.mutable._
 
-class BankAggregate(val events: EventService) {
+class BankService(repo: AccountRepo) {
+  def accountIds = repo.accountIds
+
   def payInterests(year: Int) = {
     val timestamp = TimeService.timestampFor(1, year)
-
-    val interestsPaid = new mutable.MutableList[Event]
-
     accountIds.foreach { id =>
-      val accountReader = new AccountReader(id, events, timestamp)
-      if (! accountReader.isOverdrawn() && accountReader.notYetPaidForYear(year)) {
-        val interest: BigDecimal = accountReader.balance * 0.005
-        val interestPaid = YearlyInterestPaid(id, interest, year)
-        interestsPaid += interestPaid
-        events.add(interestPaid)
+      val account : AccountAggregate = repo.getAccount(id, timestamp)
+      if (account.notOverdrawn && account.notYetPaidForYear(year)) {
+        val interest: BigDecimal = account.balance * 0.005
+        account.payYearlyInterest(interest, year)
+        repo.saveAccount(account)
       }
     }
-    interestsPaid
-  }
-
-
-  def accountIds = {
-    events.all[AccountCreated].map(_.accountId)
   }
 
   def chargeFees(month: Int, year: Int) = {
     val timestamp = TimeService.timestampFor(month, year)
-
-    val feeChargeds = new mutable.MutableList[Event]
-
     accountIds.foreach { id =>
-      val accountReader = new AccountReader(id, events, timestamp)
-      if (accountReader.isOverdrawn() && accountReader.notYetChargedForMonth(month, year)) {
-        val fee: BigDecimal = (accountReader.balance * 0.05).abs
-        val feeCharged = MonthlyOverdraftFeeCharged(id, fee, month, year)
-        feeChargeds += feeCharged
-        events.add(feeCharged)
+      val account : AccountAggregate = repo.getAccount(id, timestamp)
+      if (account.isOverdrawn && account.notYetChargedForMonth(month, year)) {
+        val fee: BigDecimal = (account.balance * 0.05).abs
+        account.chargeMonthlyFee(fee, month, year)
+        repo.saveAccount(account)
       }
     }
-    feeChargeds
   }
-
 
 }

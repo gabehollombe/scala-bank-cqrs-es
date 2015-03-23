@@ -21,16 +21,14 @@ with MockFactory
   (timeService.currentTimeMillis _).when().returns(fakeNow)
 
   "A Bank" should "charge fees for accounts that are in overdraft at the end of the month" in {
-    val eventService = new EventService
-
     val accountID = UUID.randomUUID()
 
-    val accountEvents: MutableList[(Event, Long)] =  MutableList(
-      (AccountCreated(accountID, 100), jan1 + 1),
-      (Withdrawed(accountID, 50), jan1 + 3))
-    eventService.events += accountID -> accountEvents //TODO stub instead
+    val events = List(
+      AccountCreated(accountID, 100),
+      Withdrawed(accountID, 50))
 
-    val bank = new BankAggregate(eventService)
+    val bank = new BankAggregate()
+    bank.loadEvents(events)
     val result = bank.chargeFees(2, 2015)
     val expectedFee = BigDecimal(0.05 * 50)
     val feeChargedEvent = MonthlyOverdraftFeeCharged(accountID, expectedFee, 2, 2015)

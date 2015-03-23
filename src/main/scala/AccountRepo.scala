@@ -5,6 +5,7 @@ import java.util.UUID
 class AccountRepo(val eventService: EventService, uuidService : UUIDService) {
   implicit val repo = this
   implicit val uuid = uuidService
+  var accounts = Map[UUID, AccountAggregate]()
 
   def saveAccount(accountAggregate: AccountAggregate): Unit = {
     for (event <- accountAggregate.unsavedEvents) eventService.add(event)
@@ -19,6 +20,13 @@ class AccountRepo(val eventService: EventService, uuidService : UUIDService) {
   }
 
   def getAccount(id: UUID) = accounts.get(id)
+  def getAccountReader(id: UUID, until: Long = Long.MaxValue) = {
+    val accountReader = new AccountReader
+    val events = eventService.accountEvents(id, until)
+    accountReader.loadEvents(events)
+    accountReader
+  }
 
-  var accounts = Map[UUID, AccountAggregate]()
+  def accountIds = accounts.keys
+
 }

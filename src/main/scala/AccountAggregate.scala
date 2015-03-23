@@ -1,8 +1,6 @@
 package com.bank
 
 import java.util.UUID
-
-import scala.collection.mutable
 import scala.collection.mutable._
 
 case class InvalidAccountIdError() extends Error
@@ -10,11 +8,23 @@ case class AmountMustBePositiveError() extends Error
 case class OverdrawLimitExceededError() extends Error
 
 class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, repo: AccountRepo) {
+  def notYetChargedForMonth(month: Int, year: Int): Boolean =
+    ! feeChargedMonths.contains((month, year))
+
 
   var balance: BigDecimal = 0
+  var interestPaidYears : MutableList[Int] = new MutableList()
+  var feeChargedMonths : MutableList[(Int, Int)] = new MutableList()
   var unsavedEventsList: MutableList[Event] = MutableList()
 
+  def notYetPaidForYear(year: Int): Boolean =
+    ! interestPaidYears.contains(year)
+
+  def notOverdrawn = balance >= 0
+  def isOverdrawn = balance < 0
+
   def unsavedEvents : List[Event] = this.unsavedEventsList.toList
+
   def clearUnsavedEvents =
     unsavedEventsList.clear()
 
@@ -23,10 +33,20 @@ class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, repo: Ac
 
   def applyEvent(event: Event) = event match {
     case e: Deposited => balance += e.amount
-    case e: YearlyInterestPaid => balance += e.amount
     case e: Withdrawed => balance -= e.amount
-    case e: MonthlyOverdraftFeeCharged => balance -= e.amount
+    case e: YearlyInterestPaid => onYearlyInterestPaid(e)
+    case e: MonthlyOverdraftFeeCharged => onMonthlyOverdraftFeeCharged(e)
     case _ => // Ignore unknown events
+  }
+
+  def onMonthlyOverdraftFeeCharged(event: MonthlyOverdraftFeeCharged) = {
+    balance -= event.amount
+    feeChargedMonths += ((event.month, event.year))
+  }
+
+  def onYearlyInterestPaid(event: YearlyInterestPaid) = {
+    balance += event.amount
+    interestPaidYears += event.year
   }
 
   def deposit(amount: BigDecimal) =
@@ -61,6 +81,16 @@ class AccountAggregate(val id: UUID, val overdrawLimit: BigDecimal = 0, repo: Ac
       }
     }
   }
+
+  def payYearlyInterest(amount: BigDecimal, year: Int) =
+    this.synchronized {
+      addAndApply(YearlyInterestPaid(amount, year))
+    }
+
+  def chargeMonthlyFee(amount: BigDecimal, month: Int, year: Int) =
+    this.synchronized {
+      addAndApply(MonthlyOverdraftFeeCharged(amount, month, year)
+    }
 
   def addAndApply(event: Event) = {
     unsavedEventsList += event
